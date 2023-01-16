@@ -66,10 +66,10 @@ const handleKeyUp = (event: KeyboardEvent) => {
  * - `event` - The original `KeyboardEvent` for `keydown` or `keyup`.
  *
  * @example
- * useKey("a", (isPressed, event) => console.log(isPressed, event));
+ * useKey("KeyA", (isPressed, event) => console.log(isPressed, event));
  *
  * @example
- * useKey("g", (pressed, event) => {
+ * useKey("KeyG", (pressed, event) => {
  *   if (pressed && event.ctrlKey) console.log("Ctrl + G Pressed!");
  * });
  *
