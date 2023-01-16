@@ -16,9 +16,12 @@
   },
   "keywords": [
     "react",
-    "hooks",
     "hook",
-    "react-hook"
+    "react-hook",
+    "keyboard",
+    "keyboard-event",
+    "key",
+    "key-event"
   ],
   "scripts": {
     "build": "tsc",
