@@ -1,69 +1,46 @@
-# PACKAGE-NAME
+# use-key
 
 [![NPM version][npm-image]][npm-url]
 [![Actions Status][ci-image]][ci-url]
 [![PR Welcome][npm-downloads-image]][npm-downloads-url]
 
-PACKAGE-DESCRIPTION
+A react hook for listening to custom [KeyboardEvents](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code).
 
 ## Introduction
 
-Package introduction, couple of paragraphs.
+This hook optimizes the use of keyboard events by only creating a single window `keydown` and `keyup` listener for all instances of the hook, avoiding the creation of unnecessary listeners and increasing efficiency.
 
-```typescript
-import useHook from "@buildinams/PACKAGE-NAME";
-
-const baz = useHook({
-  foo: "something",
-  bar: "something else",
-});
-```
+This library is also SSR safe, and only runs on the client.
 
 ## Installation
 
 Install this package with `npm`.
 
 ```bash
-npm i @buildinams/PACKAGE-NAME
+npm i @buildinams/use-key
 ```
 
 ## Usage
 
-Example 1 description.
+To listen to a single key:
 
 ```tsx
-import React from 'react';
-import useHook from '@buildinams/PACKAGE-NAME';
+import useKey from "@buildinams/use-key";
 
-const SomeExample = () = {
-  const baz = useHook({
-    foo: "something",
-    bar: "something else",
-  });
-
-  return (
-    <p>{baz}</p>
-  );
-}
+useKey("Escape", (pressed: boolean) => {
+  if (pressed) // Do something on "Escape"...
+});
 ```
 
-## API
+To listen to key modifiers:
 
-### Input
+```tsx
+import useKey from "@buildinams/use-key";
 
-- `foo`: Required - Description of argument.
-- `baz`: Optional - Description of argument.
-
-### Input as a table
-
-| Property | Type   | Required | Notes                    |
-| -------- | ------ | -------- | ------------------------ |
-| **foo**  | string | **Yes**  | Description of argument. |
-| **baz**  | string | No       | Description of argument. |
-
-### Output
-
-- `baz`: Description of output.
+useKey("g", (pressed: boolean, event: KeyboardEvent) => {
+  if (pressed && event.ctrlKey) // Do something on "Ctrl + G"...
+});
+```
 
 ## Requirements
 
@@ -71,11 +48,11 @@ This library requires a minimum React version of `18.0.0`.
 
 ## Requests and Contributing
 
-Found an issue? Want a new feature? Get involved! Please contribute using our guideline [here](https://github.com/buildinamsterdam/PACKAGE-NAME/blob/main/CONTRIBUTING.md).
+Found an issue? Want a new feature? Get involved! Please contribute using our guideline [here](https://github.com/buildinamsterdam/use-key/blob/main/CONTRIBUTING.md).
 
-[npm-image]: https://img.shields.io/npm/v/@buildinams/PACKAGE-NAME.svg?style=flat-square&logo=react
-[npm-url]: https://npmjs.org/package/@buildinams/PACKAGE-NAME
-[ci-image]: https://github.com/buildinamsterdam/PACKAGE-NAME/actions/workflows/test.yml/badge.svg
-[ci-url]: https://github.com/buildinamsterdam/PACKAGE-NAME/actions
-[npm-downloads-image]: https://img.shields.io/npm/dm/@buildinams/PACKAGE-NAME.svg
-[npm-downloads-url]: https://npmcharts.com/compare/@buildinams/PACKAGE-NAME?minimal=true
+[npm-image]: https://img.shields.io/npm/v/@buildinams/use-key.svg?style=flat-square&logo=react
+[npm-url]: https://npmjs.org/package/@buildinams/use-key
+[ci-image]: https://github.com/buildinamsterdam/use-key/actions/workflows/test.yml/badge.svg
+[ci-url]: https://github.com/buildinamsterdam/use-key/actions
+[npm-downloads-image]: https://img.shields.io/npm/dm/@buildinams/use-key.svg
+[npm-downloads-url]: https://npmcharts.com/compare/@buildinams/use-key?minimal=true

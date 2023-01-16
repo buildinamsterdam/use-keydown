@@ -1,18 +1,18 @@
 {
-  "name": "@buildinams/PACKAGE-NAME",
-  "description": "PACKAGE-DESCRIPTION",
+  "name": "@buildinams/use-key",
+  "description": "React hook for listening to custom keyboard events.",
   "version": "0.0.1",
   "license": "MIT",
   "author": "Build in Amsterdam <development@buildinamsterdam.com> (https://www.buildinamsterdam.com/)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/buildinamsterdam/PACKAGE-NAME#readme",
+  "homepage": "https://github.com/buildinamsterdam/use-key#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/buildinamsterdam/PACKAGE-NAME.git"
+    "url": "https://github.com/buildinamsterdam/use-key.git"
   },
   "bugs": {
-    "url": "https://github.com/buildinamsterdam/PACKAGE-NAME/issues"
+    "url": "https://github.com/buildinamsterdam/use-key/issues"
   },
   "keywords": [
     "react",

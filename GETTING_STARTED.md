@@ -22,8 +22,8 @@ npm ci
 
 When getting started you'll want to globally find and replace the following:
 
-- `PACKAGE-NAME` - The name of the package, e.g. `use-hook`.
-- `PACKAGE-DESCRIPTION` - A short one-liner description of the package.
+- `use-key` - The name of the package, e.g. `use-hook`.
+- `React hook for listening to custom keyboard events.` - A short one-liner description of the package.
 
 Then, update the list of `keywords` inside `package.json` with relevant keywords. These should match those defined as package `Topics` on GitHub.
 
@@ -66,18 +66,18 @@ npm link
 Then in the project you want to test it in, run:
 
 ```bash
-npm link @buildinams/PACKAGE-NAME
+npm link @buildinams/use-key
 ```
 
 Once done testing, you can unlink the package by running:
 
 ```bash
-npm unlink --no-save @buildinams/PACKAGE-NAME
+npm unlink --no-save @buildinams/use-key
 ```
 
 Couple things to **Note**:
 
-- When running `npm link` the package-name is taken from `package.json` and <u>not</u> from the directory name. So in our case it'll always be prefixed with `@buildinams/` and then the name of the package, such as `@buildinams/use-hook`.
+- When running `npm link` the use-key is taken from `package.json` and <u>not</u> from the directory name. So in our case it'll always be prefixed with `@buildinams/` and then the name of the package, such as `@buildinams/use-hook`.
 - Link is based on the built package, so every time you make a change to the package, you'll need to rebuild it. But you don't need to re-link it.
 - If you're having issues linking, you may need to do a clean package install in both the package and the project you're testing it in. To do this; delete `node_modules` and run `npm i` in both then try linking again.
 - You can confirm link worked by checking if the linked package is found in the `node_modules` directory of the project you're testing it in. It'll be inside a module called `@buildinams` and then the name of the package.
@@ -121,8 +121,8 @@ Steps to generate token:
 
 Steps to publish:
 
-1. Go to the projects settings on Github at [GitHub](https://github.com/buildinamsterdam/PACKAGE-NAME/settings).
-2. Under `Secrets` open `Secrets and variables`, then go to `Actions` (or go directly [here](https://github.com/buildinamsterdam/PACKAGE-NAME/settings/secrets/actions)).
+1. Go to the projects settings on Github at [GitHub](https://github.com/buildinamsterdam/use-key/settings).
+2. Under `Secrets` open `Secrets and variables`, then go to `Actions` (or go directly [here](https://github.com/buildinamsterdam/use-key/settings/secrets/actions)).
 3. Click `New repository secret` and set the title as `NPM_TOKEN` and the value as the token you generated in the previous steps.
 
-Now you're ready to publish! To publish you can simply go to [releases](https://github.com/buildinamsterdam/PACKAGE-NAME/releases/new) and create a new release. The release will then be automatically published to NPM once `publish-npm.yml` actions pass.
+Now you're ready to publish! To publish you can simply go to [releases](https://github.com/buildinamsterdam/use-key/releases/new) and create a new release. The release will then be automatically published to NPM once `publish-npm.yml` actions pass.
