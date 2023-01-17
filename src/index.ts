@@ -1,2 +1,2 @@
 export type { OnChangeEvent } from "./types";
-export { default } from "./useKey";
+export { default } from "./useKeyEvent";

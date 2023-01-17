@@ -74,7 +74,7 @@ const handleKeyUp = (event: KeyboardEvent) => {
  * });
  *
  */
-const useKey = (targetKeyCode: string, onChange: OnChangeEvent) => {
+const useKeyEvent = (targetKeyCode: string, onChange: OnChangeEvent) => {
   useEffect(() => {
     addListener(targetKeyCode, onChange);
 
@@ -96,4 +96,4 @@ const useKey = (targetKeyCode: string, onChange: OnChangeEvent) => {
   }, [targetKeyCode, onChange]);
 };
 
-export default useKey;
+export default useKeyEvent;
