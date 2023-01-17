@@ -1,14 +1,14 @@
-# use-key-event
+# use-key-down
 
 [![NPM version][npm-image]][npm-url]
 [![Actions Status][ci-image]][ci-url]
 [![PR Welcome][npm-downloads-image]][npm-downloads-url]
 
-A react hook for listening to custom [KeyboardEvents](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code).
+React hook for listening to custom `keydown` [events](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code).
 
 ## Introduction
 
-This hook optimizes the use of keyboard events by only creating a single window `keydown` and `keyup` listener for all instances of the hook, avoiding the creation of unnecessary listeners and increasing efficiency.
+This hook optimizes the use of keyboard events by only creating a single window `keydown` event listener for all instances of the hook, avoiding the creation of unnecessary listeners and increasing efficiency.
 
 This library is also SSR safe, and only runs on the client.
 
@@ -17,7 +17,7 @@ This library is also SSR safe, and only runs on the client.
 Install this package with `npm`.
 
 ```bash
-npm i @buildinams/use-key-event
+npm i @buildinams/use-key-down
 ```
 
 ## Usage
@@ -25,20 +25,18 @@ npm i @buildinams/use-key-event
 To listen to a single key:
 
 ```tsx
-import useKey from "@buildinams/use-key-event";
+import useKeyDown from "@buildinams/use-key-down";
 
-useKey("Escape", (pressed: boolean) => {
-  if (pressed) // Do something on "Escape"...
-});
+useKeyDown("Escape", () => {}); // Do something on "Escape"...
 ```
 
 To listen to key modifiers:
 
 ```tsx
-import useKey from "@buildinams/use-key-event";
+import useKeyDown from "@buildinams/use-key-down";
 
-useKey("g", (pressed: boolean, event: KeyboardEvent) => {
-  if (pressed && event.ctrlKey) // Do something on "Ctrl + G"...
+useKeyDown("g", (event: KeyboardEvent) => {
+  if (event.ctrlKey) // Do something on "Ctrl + G"...
 });
 ```
 
@@ -48,11 +46,11 @@ This library requires a minimum React version of `18.0.0`.
 
 ## Requests and Contributing
 
-Found an issue? Want a new feature? Get involved! Please contribute using our guideline [here](https://github.com/buildinamsterdam/use-key-event/blob/main/CONTRIBUTING.md).
+Found an issue? Want a new feature? Get involved! Please contribute using our guideline [here](https://github.com/buildinamsterdam/use-key-down/blob/main/CONTRIBUTING.md).
 
-[npm-image]: https://img.shields.io/npm/v/@buildinams/use-key-event.svg?style=flat-square&logo=react
-[npm-url]: https://npmjs.org/package/@buildinams/use-key-event
-[ci-image]: https://github.com/buildinamsterdam/use-key-event/actions/workflows/test.yml/badge.svg
-[ci-url]: https://github.com/buildinamsterdam/use-key-event/actions
-[npm-downloads-image]: https://img.shields.io/npm/dm/@buildinams/use-key-event.svg
-[npm-downloads-url]: https://npmcharts.com/compare/@buildinams/use-key-event?minimal=true
+[npm-image]: https://img.shields.io/npm/v/@buildinams/use-key-down.svg?style=flat-square&logo=react
+[npm-url]: https://npmjs.org/package/@buildinams/use-key-down
+[ci-image]: https://github.com/buildinamsterdam/use-key-down/actions/workflows/test.yml/badge.svg
+[ci-url]: https://github.com/buildinamsterdam/use-key-down/actions
+[npm-downloads-image]: https://img.shields.io/npm/dm/@buildinams/use-key-down.svg
+[npm-downloads-url]: https://npmcharts.com/compare/@buildinams/use-key-down?minimal=true

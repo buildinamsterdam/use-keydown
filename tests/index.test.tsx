@@ -1,12 +1,12 @@
 import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 
-import useKey, { OnChangeEvent } from "../dist";
+import useKeyDown, { OnChangeEvent } from "../dist";
 
 let onChange: OnChangeEvent;
 
 const MockComponent = () => {
-  useKey("KeyG", onChange);
+  useKeyDown("KeyG", onChange);
   return <div />;
 };
 
@@ -24,10 +24,6 @@ describe("The hook", () => {
       "keydown",
       expect.any(Function)
     );
-    expect(window.addEventListener).toHaveBeenCalledWith(
-      "keyup",
-      expect.any(Function)
-    );
   });
 
   it("removes event listener on unmount", () => {
@@ -38,10 +34,6 @@ describe("The hook", () => {
       "keydown",
       expect.any(Function)
     );
-    expect(window.removeEventListener).toHaveBeenCalledWith(
-      "keyup",
-      expect.any(Function)
-    );
   });
 
   it("calls 'onChange' with the correct arguments on keydown", () => {
@@ -50,18 +42,6 @@ describe("The hook", () => {
     fireEvent.keyDown(window, { code: "KeyG" });
 
     expect(onChange).toHaveBeenCalledWith(
-      true,
-      expect.objectContaining({ code: "KeyG" })
-    );
-  });
-
-  it("calls 'onChange' with the correct arguments on keyup", () => {
-    render(<MockComponent />);
-
-    fireEvent.keyUp(window, { code: "KeyG" });
-
-    expect(onChange).toHaveBeenCalledWith(
-      false,
       expect.objectContaining({ code: "KeyG" })
     );
   });
@@ -80,7 +60,6 @@ describe("The hook", () => {
     fireEvent.keyDown(window, { code: "KeyG", ctrlKey: true });
 
     expect(onChange).toHaveBeenCalledWith(
-      true,
       expect.objectContaining({ code: "KeyG", ctrlKey: true })
     );
   });
