@@ -1,18 +1,18 @@
 {
-  "name": "@buildinams/use-key-down",
+  "name": "@buildinams/use-keydown",
   "description": "React hook for listening to custom keydown events.",
   "version": "0.0.1",
   "license": "MIT",
   "author": "Build in Amsterdam <development@buildinamsterdam.com> (https://www.buildinamsterdam.com/)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/buildinamsterdam/use-key-down#readme",
+  "homepage": "https://github.com/buildinamsterdam/use-keydown#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/buildinamsterdam/use-key-down.git"
+    "url": "https://github.com/buildinamsterdam/use-keydown.git"
   },
   "bugs": {
-    "url": "https://github.com/buildinamsterdam/use-key-down/issues"
+    "url": "https://github.com/buildinamsterdam/use-keydown/issues"
   },
   "keywords": [
     "react",

@@ -1,12 +1,12 @@
 import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 
-import useKeyDown, { OnChangeEvent } from "../dist";
+import useKeydown, { OnChangeEvent } from "../dist";
 
 let onChange: OnChangeEvent;
 
 const MockComponent = () => {
-  useKeyDown("KeyG", onChange);
+  useKeydown("KeyG", onChange);
   return <div />;
 };
 

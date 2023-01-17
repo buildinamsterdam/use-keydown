@@ -21,15 +21,15 @@ const handleKeyDown = (event: KeyboardEvent) => {
  * fired and the target key is pressed.
  *
  * @example
- * useKeyDown("KeyA", (event) => console.log(event));
+ * useKeydown("KeyA", (event) => console.log(event));
  *
  * @example
- * useKeyDown("KeyG", (event) => {
+ * useKeydown("KeyG", (event) => {
  *   if (event.ctrlKey) console.log("Ctrl + G Pressed!");
  * });
  *
  */
-const useKeyDown = (targetKeyCode: string, onChange: OnChangeEvent) => {
+const useKeydown = (targetKeyCode: string, onChange: OnChangeEvent) => {
   useEffect(() => {
     listeners.set(targetKeyCode, onChange);
 
@@ -49,4 +49,4 @@ const useKeyDown = (targetKeyCode: string, onChange: OnChangeEvent) => {
   }, [onChange, targetKeyCode]);
 };
 
-export default useKeyDown;
+export default useKeydown;
