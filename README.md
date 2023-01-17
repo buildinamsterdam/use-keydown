@@ -8,7 +8,7 @@ React hook for listening to custom `keydown` [events](https://developer.mozilla.
 
 ## Introduction
 
-This hook optimizes the use of keyboard events by only creating a single window `keydown` event listener for all instances of the hook, avoiding the creation of unnecessary listeners and increasing efficiency.
+This hook optimizes keyboard event handling by utilizing a single window `keydown` event listener for all instances of the hook, resulting in a more streamlined and efficient process.
 
 This library is also SSR safe, and only runs on the client.
 

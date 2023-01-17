@@ -6,7 +6,7 @@ const listeners = new Map<string, OnChangeEvent>();
 
 let isHooked = false;
 
-const handleKeyDown = (event: KeyboardEvent) => {
+const handleKeydown = (event: KeyboardEvent) => {
   listeners.forEach((onChange, targetKeyCode) => {
     if (event.code === targetKeyCode) onChange(event);
   });
@@ -17,8 +17,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
  *
  * @param targetKeyCode - The target key [code](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code) to listen for.
  *
- * @param onChange - The callback to invoke when window `keydown` event is
- * fired and the target key is pressed.
+ * @param onChange - The callback to invoke when window `keydown` event is fired and the target key is pressed.
  *
  * @example
  * useKeydown("KeyA", (event) => console.log(event));
@@ -34,7 +33,7 @@ const useKeydown = (targetKeyCode: string, onChange: OnChangeEvent) => {
     listeners.set(targetKeyCode, onChange);
 
     if (!isHooked) {
-      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keydown", handleKeydown);
       isHooked = true;
     }
 
@@ -42,7 +41,7 @@ const useKeydown = (targetKeyCode: string, onChange: OnChangeEvent) => {
       listeners.delete(targetKeyCode);
 
       if (listeners.size === 0) {
-        window.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("keydown", handleKeydown);
         isHooked = false;
       }
     };
