@@ -3,22 +3,24 @@ import React from "react";
 
 import useKeydown, { OnChangeEvent } from "../dist";
 
-let onChange: OnChangeEvent;
+interface MockComponentProps {
+  keyCode: string;
+  onChange: OnChangeEvent;
+}
 
-const MockComponent = () => {
-  useKeydown("KeyG", onChange);
+const MockComponent = ({ keyCode, onChange }: MockComponentProps) => {
+  useKeydown(keyCode, onChange);
   return <div />;
 };
 
 describe("The hook", () => {
   beforeEach(() => {
-    onChange = jest.fn();
     jest.spyOn(window, "addEventListener");
     jest.spyOn(window, "removeEventListener");
   });
 
   it("adds event listeners on mount", () => {
-    render(<MockComponent />);
+    render(<MockComponent keyCode="KeyG" onChange={jest.fn()} />);
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       "keydown",
@@ -27,7 +29,9 @@ describe("The hook", () => {
   });
 
   it("removes event listener on unmount", () => {
-    const { unmount } = render(<MockComponent />);
+    const { unmount } = render(
+      <MockComponent keyCode="KeyG" onChange={jest.fn()} />
+    );
     unmount();
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
@@ -37,7 +41,8 @@ describe("The hook", () => {
   });
 
   it("calls 'onChange' with the correct arguments on keydown", () => {
-    render(<MockComponent />);
+    const onChange = jest.fn();
+    render(<MockComponent keyCode="KeyG" onChange={onChange} />);
 
     fireEvent.keyDown(window, { code: "KeyG" });
 
@@ -47,7 +52,8 @@ describe("The hook", () => {
   });
 
   it("does not call 'onChange' if a different key is pressed", () => {
-    render(<MockComponent />);
+    const onChange = jest.fn();
+    render(<MockComponent keyCode="KeyG" onChange={onChange} />);
 
     fireEvent.keyDown(window, { code: "Escape" });
 
@@ -55,12 +61,53 @@ describe("The hook", () => {
   });
 
   it("can be used with key modifiers", () => {
-    render(<MockComponent />);
+    const onChange = jest.fn();
+    render(<MockComponent keyCode="KeyG" onChange={onChange} />);
 
     fireEvent.keyDown(window, { code: "KeyG", ctrlKey: true });
 
     expect(onChange).toHaveBeenCalledWith(
       expect.objectContaining({ code: "KeyG", ctrlKey: true })
     );
+  });
+
+  it("if called multiple times with same target key, all with the matching key are called", () => {
+    const onChangeOne = jest.fn();
+    const onChangeTwo = jest.fn();
+
+    render(
+      <>
+        <MockComponent keyCode="KeyG" onChange={onChangeOne} />
+        <MockComponent keyCode="KeyG" onChange={onChangeTwo} />
+      </>
+    );
+
+    fireEvent.keyDown(window, { code: "KeyG" });
+
+    expect(onChangeOne).toHaveBeenCalledWith(
+      expect.objectContaining({ code: "KeyG" })
+    );
+    expect(onChangeTwo).toHaveBeenCalledWith(
+      expect.objectContaining({ code: "KeyG" })
+    );
+  });
+
+  it("if called multiple times with different target key, only the one with the matching key is called", () => {
+    const onChangeOne = jest.fn();
+    const onChangeTwo = jest.fn();
+
+    render(
+      <>
+        <MockComponent keyCode="KeyG" onChange={onChangeOne} />
+        <MockComponent keyCode="Escape" onChange={onChangeTwo} />
+      </>
+    );
+
+    fireEvent.keyDown(window, { code: "KeyG" });
+
+    expect(onChangeOne).toHaveBeenCalledWith(
+      expect.objectContaining({ code: "KeyG" })
+    );
+    expect(onChangeTwo).not.toHaveBeenCalled();
   });
 });
