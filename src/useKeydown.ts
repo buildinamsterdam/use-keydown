@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 
-import { OnChangeEvent } from "./types";
+import { Listener, OnChangeEvent } from "./types";
 
-const listeners = new Map<string, OnChangeEvent>();
+const listeners = new Set<Listener>();
 
 let isHooked = false;
 
 const handleKeydown = (event: KeyboardEvent) => {
-  listeners.forEach((onChange, targetKeyCode) => {
-    if (event.code === targetKeyCode) onChange(event);
+  listeners.forEach((listener) => {
+    if (event.code === listener.targetKeyCode) listener.onChange(event);
   });
 };
 
@@ -30,7 +30,8 @@ const handleKeydown = (event: KeyboardEvent) => {
  */
 const useKeydown = (targetKeyCode: string, onChange: OnChangeEvent) => {
   useEffect(() => {
-    listeners.set(targetKeyCode, onChange);
+    const listener: Listener = { targetKeyCode, onChange };
+    listeners.add(listener);
 
     if (!isHooked) {
       window.addEventListener("keydown", handleKeydown);
@@ -38,7 +39,7 @@ const useKeydown = (targetKeyCode: string, onChange: OnChangeEvent) => {
     }
 
     return () => {
-      listeners.delete(targetKeyCode);
+      listeners.delete(listener);
 
       if (listeners.size === 0) {
         window.removeEventListener("keydown", handleKeydown);
