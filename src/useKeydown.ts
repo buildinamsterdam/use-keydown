@@ -26,7 +26,6 @@ const handleKeydown = (event: KeyboardEvent) => {
  * useKeydown("KeyG", (event) => {
  *   if (event.ctrlKey) console.log("Ctrl + G Pressed!");
  * });
- *
  */
 const useKeydown = (targetKeyCode: string, onChange: OnChangeEvent) => {
   useEffect(() => {
