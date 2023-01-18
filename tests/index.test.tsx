@@ -92,7 +92,7 @@ describe("The hook", () => {
     );
   });
 
-  it("if called multiple times with different target key, only the one with the matching key is called", () => {
+  it("if called multiple times with different target keys, only the ones with the matching keys are called", () => {
     const onChangeOne = jest.fn();
     const onChangeTwo = jest.fn();
 
