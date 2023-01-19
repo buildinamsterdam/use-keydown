@@ -1,6 +1,5 @@
 import { Target } from "./types";
 
-/** Get the target element from the config object. */
 export const getEventTargetFromTarget = (target?: Target) => {
   if (target) {
     // If the target is a ref...
