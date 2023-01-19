@@ -40,6 +40,16 @@ useKeydown("KeyG", (event: KeyboardEvent) => {
 });
 ```
 
+To listen to multiple keys:
+
+```tsx
+import useKeydown from "@buildinams/use-keydown";
+
+useKeydown(["KeyA", "KeyG"], () => {}); // Do something on "A" or "G"...
+```
+
+**Note:** When using multiple keys, the callback will be called if any of the defined keys are pressed.
+
 ## Requirements
 
 This library requires a minimum React version of `18.0.0`.

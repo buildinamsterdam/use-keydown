@@ -4,6 +4,6 @@ export type OnChangeEvent = (
 ) => void;
 
 export interface Listener {
-  targetKeyCode: string;
+  targetKeyCode: string | string[];
   onChange: OnChangeEvent;
 }
