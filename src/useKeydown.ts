@@ -80,7 +80,7 @@ const handleTargetKeydown = (
  * useKeydown(["Escape", "Escape"], () => console.log("Escape + Escape Pressed!"));
  *
  * @example
- * useKeydown(["Escape"], () => {}, document);
+ * useKeydown("Escape", () => {}, document);
  */
 const useKeydown = (
   targetKeyCode: string | string[],
