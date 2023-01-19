@@ -1,2 +1,2 @@
-export type { HookProps } from "./types";
-export { default } from "./useHook";
+export type { OnChangeEvent } from "./types";
+export { default } from "./useKeydown";

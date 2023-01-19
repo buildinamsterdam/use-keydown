@@ -1,4 +1,9 @@
-export interface HookProps {
-  foo: string;
-  bar?: string;
+export type OnChangeEvent = (
+  /** The original `keydown` event. */
+  event: KeyboardEvent
+) => void;
+
+export interface Listener {
+  targetKeyCode: string;
+  onChange: OnChangeEvent;
 }
