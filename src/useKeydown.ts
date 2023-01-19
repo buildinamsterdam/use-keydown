@@ -75,6 +75,12 @@ const handleTargetKeydown = (
  * useKeydown("KeyG", (event) => {
  *   if (event.ctrlKey) console.log("Ctrl + G Pressed!");
  * });
+ *
+ * @example
+ * useKeydown(["Escape", "Escape"], () => console.log("Escape + Escape Pressed!"));
+ *
+ * @example
+ * useKeydown(["Escape"], () => {}, document);
  */
 const useKeydown = (
   targetKeyCode: string | string[],
