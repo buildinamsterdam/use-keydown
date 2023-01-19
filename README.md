@@ -8,7 +8,7 @@ React hook for listening to custom `keydown` [events](https://developer.mozilla.
 
 ## Introduction
 
-This hook optimizes keyboard event handling by utilizing a single window `keydown` event listener for all instances of the hook, resulting in a more streamlined and efficient process.
+This hook optimizes keyboard event handling by only initializing a single event listener for each target used, resulting in a more streamlined and efficient process.
 
 This library is also SSR safe, and only runs on the client.
 
@@ -49,6 +49,17 @@ useKeydown(["KeyA", "KeyG"], () => {}); // Do something on "A" or "G"...
 ```
 
 **Note:** When using multiple keys, the callback will be called if any of the defined keys are pressed.
+
+## Using Custom Targets
+
+By default, the hook will listen to the `window` object. However, you can also listen to any custom target by passing it as the third argument. This accepts any object that extends `EventTarget`, such as; `document` or `HTMLElement`.
+
+```tsx
+import useKeydown from "@buildinams/use-keydown";
+
+const elementRef = useRef<HTMLDivElement>(null);
+useKeydown("Enter", () => {}, elementRef); // Do something on "Enter"...
+```
 
 ## Requirements
 

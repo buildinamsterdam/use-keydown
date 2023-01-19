@@ -12,10 +12,8 @@ export interface EventTargetRef {
   current: EventTarget | null;
 }
 
-export interface Config {
-  /**
-   * Lets you specify a dom node or ref you want to attach the event listener
-   * to. By default, this is `window`.
-   */
-  target?: EventTarget | EventTargetRef;
-}
+/**
+ * A specify dom node or ref you want to attach the event listener to.
+ * Defaults to `window`.
+ */
+export type Target = EventTarget | EventTargetRef;

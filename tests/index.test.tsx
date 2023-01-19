@@ -1,12 +1,12 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 
-import useKeydown, { OnChangeEvent } from "../dist";
+import useKeydown, { OnChangeEvent, Target } from "../dist";
 
 interface MockComponentProps {
   targetKeyCode: string | string[];
   onChange: OnChangeEvent;
-  target?: EventTarget;
+  target?: Target;
 }
 
 const MockComponent = ({
@@ -14,7 +14,7 @@ const MockComponent = ({
   onChange,
   target,
 }: MockComponentProps) => {
-  useKeydown(targetKeyCode, onChange, { target });
+  useKeydown(targetKeyCode, onChange, target);
   return <div />;
 };
 

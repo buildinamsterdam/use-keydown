@@ -1,2 +1,2 @@
-export type { Config, EventTargetRef, OnChangeEvent } from "./types";
+export type { EventTargetRef, OnChangeEvent, Target } from "./types";
 export { default } from "./useKeydown";
