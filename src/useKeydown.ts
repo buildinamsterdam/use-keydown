@@ -1,12 +1,51 @@
 import { useEffect } from "react";
 
-import { Listener, OnChangeEvent } from "./types";
+import { Config, Listener, OnChangeEvent } from "./types";
+import { getEventTargetFromConfig } from "./utils";
 
-const listeners = new Set<Listener>();
+const targets = new Map<EventTarget, Set<Listener>>();
 
-let isHooked = false;
+const addListener = (
+  eventTarget: EventTarget,
+  listener: Listener,
+  handleKeydown: (baseEvent: Event) => void
+) => {
+  const listeners = targets.get(eventTarget);
 
-const handleKeydown = (event: KeyboardEvent) => {
+  // If target already exists, add this listener to existing set of listeners
+  if (listeners) listeners.add(listener);
+  // Else, target is new, so create new event listener
+  else {
+    targets.set(eventTarget, new Set([listener]));
+    eventTarget.addEventListener("keydown", handleKeydown);
+  }
+};
+
+const removeListener = (
+  eventTarget: EventTarget,
+  listener: Listener,
+  handleKeydown: (baseEvent: Event) => void
+) => {
+  const listeners = targets.get(eventTarget);
+  if (!listeners) return;
+
+  // Remove this listener from existing set of listeners
+  listeners.delete(listener);
+
+  // If there are no more listeners, remove the event listener
+  if (listeners.size === 0) {
+    targets.delete(eventTarget);
+    eventTarget.removeEventListener("keydown", handleKeydown);
+  }
+};
+
+const handleTargetKeydown = (
+  eventTarget: EventTarget,
+  event: KeyboardEvent
+) => {
+  const listeners = targets.get(eventTarget);
+  if (!listeners) return;
+
   listeners.forEach((listener) => {
     const { targetKeyCode, onChange } = listener;
 
@@ -27,6 +66,9 @@ const handleKeydown = (event: KeyboardEvent) => {
  *
  * @param onChange - The callback to invoke when window `keydown` event is fired and the target key is pressed.
  *
+ * @param config - Optional configuration object.
+ * @param config.target - Lets you specify a dom node or ref you want to attach the event listener to. Defaults to `window`.
+ *
  * @example
  * useKeydown("KeyA", (event) => console.log(event));
  *
@@ -34,29 +76,35 @@ const handleKeydown = (event: KeyboardEvent) => {
  * useKeydown("KeyG", (event) => {
  *   if (event.ctrlKey) console.log("Ctrl + G Pressed!");
  * });
+ *
+ * @example
+ * useKeydown(["Escape", "Escape"], () => console.log("Escape + Escape Pressed!"));
+ *
+ * @example
+ * useKeydown("Escape", () => {}, { target: document });
  */
 const useKeydown = (
   targetKeyCode: string | string[],
-  onChange: OnChangeEvent
+  onChange: OnChangeEvent,
+  config?: Config
 ) => {
   useEffect(() => {
+    const eventTarget = getEventTargetFromConfig(config);
     const listener: Listener = { targetKeyCode, onChange };
-    listeners.add(listener);
 
-    if (!isHooked) {
-      window.addEventListener("keydown", handleKeydown);
-      isHooked = true;
-    }
+    const handleKeydown = (baseEvent: Event) => {
+      // As user can pass in a custom 'target', we need to check if the event is
+      // a KeyboardEvent before we can safely access the 'event.code' property
+      const event = baseEvent as KeyboardEvent;
+      if (event.code) handleTargetKeydown(eventTarget, event);
+    };
+
+    addListener(eventTarget, listener, handleKeydown);
 
     return () => {
-      listeners.delete(listener);
-
-      if (listeners.size === 0) {
-        window.removeEventListener("keydown", handleKeydown);
-        isHooked = false;
-      }
+      removeListener(eventTarget, listener, handleKeydown);
     };
-  }, [onChange, targetKeyCode]);
+  }, [onChange, config, targetKeyCode]);
 };
 
 export default useKeydown;
