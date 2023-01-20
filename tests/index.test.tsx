@@ -14,7 +14,7 @@ const MockComponent = ({
   onChange,
   target,
 }: MockComponentProps) => {
-  useKeydown(targetKeyCode, onChange, target);
+  useKeydown(targetKeyCode, onChange, { target });
   return <div />;
 };
 

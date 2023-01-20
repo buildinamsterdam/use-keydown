@@ -1,7 +1,9 @@
-import { Target } from "./types";
+import { Config } from "./types";
 
-export const getEventTargetFromTarget = (target?: Target) => {
-  if (target) {
+export const getEventTargetFromConfig = (config?: Config) => {
+  if (config?.target) {
+    const { target } = config;
+
     // If the target is a ref...
     if ("current" in target) {
       // ...and the ref has a value, return it

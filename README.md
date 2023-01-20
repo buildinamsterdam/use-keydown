@@ -52,13 +52,13 @@ useKeydown(["KeyA", "KeyG"], () => {}); // Do something on "A" or "G"...
 
 ## Using Custom Targets
 
-By default, the hook will listen to the `window` object. However, you can also listen to any custom target by passing it as the third argument. This accepts any object that extends `EventTarget`, such as; `document` or `HTMLElement`.
+By default, the hook will listen to the `window` object. You can however listen to any custom target by passing it as `target` within the _optional_ config object. This accepts any object that extends `EventTarget`, such as; `document` or `HTMLElement`. For example:
 
 ```tsx
 import useKeydown from "@buildinams/use-keydown";
 
 const elementRef = useRef<HTMLDivElement>(null);
-useKeydown("Enter", () => {}, elementRef); // Do something on "Enter"...
+useKeydown("Enter", () => {}, { target: elementRef }); // Do something on "Enter"...
 ```
 
 ## Requirements

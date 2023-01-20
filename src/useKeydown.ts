@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import { Listener, OnChangeEvent, Target } from "./types";
-import { getEventTargetFromTarget } from "./utils";
+import { Config, Listener, OnChangeEvent } from "./types";
+import { getEventTargetFromConfig } from "./utils";
 
 const targets = new Map<EventTarget, Set<Listener>>();
 
@@ -66,7 +66,8 @@ const handleTargetKeydown = (
  *
  * @param onChange - The callback to invoke when window `keydown` event is fired and the target key is pressed.
  *
- * @param target - Lets you specify a dom node or ref you want to attach the event listener to. Defaults to `window`.
+ * @param config - Optional configuration object.
+ * @param config.target - Lets you specify a dom node or ref you want to attach the event listener to. Defaults to `window`.
  *
  * @example
  * useKeydown("KeyA", (event) => console.log(event));
@@ -80,15 +81,15 @@ const handleTargetKeydown = (
  * useKeydown(["Escape", "Escape"], () => console.log("Escape + Escape Pressed!"));
  *
  * @example
- * useKeydown("Escape", () => {}, document);
+ * useKeydown("Escape", () => {}, { target: document });
  */
 const useKeydown = (
   targetKeyCode: string | string[],
   onChange: OnChangeEvent,
-  target?: Target
+  config?: Config
 ) => {
   useEffect(() => {
-    const eventTarget = getEventTargetFromTarget(target);
+    const eventTarget = getEventTargetFromConfig(config);
     const listener: Listener = { targetKeyCode, onChange };
 
     const handleKeydown = (baseEvent: Event) => {
@@ -103,7 +104,7 @@ const useKeydown = (
     return () => {
       removeListener(eventTarget, listener, handleKeydown);
     };
-  }, [onChange, target, targetKeyCode]);
+  }, [onChange, config, targetKeyCode]);
 };
 
 export default useKeydown;
