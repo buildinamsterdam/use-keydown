@@ -3,11 +3,6 @@ export type OnChangeEvent = (
   event: KeyboardEvent
 ) => void;
 
-export interface Listener {
-  targetKeyCode: string | string[];
-  onChange: OnChangeEvent;
-}
-
 export interface EventTargetRef {
   current: EventTarget | null;
 }
@@ -20,4 +15,16 @@ export interface Config {
    * Defaults to `window`.
    */
   target?: Target;
+}
+
+export type EventHandler = (baseEvent: Event) => void;
+
+export interface Listener {
+  keyCode: string | string[];
+  onChange: OnChangeEvent;
+}
+
+export interface Query {
+  eventHandler: EventHandler;
+  listeners: Set<Listener>;
 }
