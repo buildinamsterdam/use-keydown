@@ -1,5 +1,5 @@
 export type OnChangeEvent = (
-  /** The original `keydown` event. */
+  /** The original keyboard event. */
   event: KeyboardEvent
 ) => void;
 
