@@ -1,3 +1,5 @@
+import { MutableRefObject } from "react";
+
 export type OnChangeEvent = (
   /** The original keyboard event. */
   event: KeyboardEvent
@@ -24,7 +26,9 @@ export interface Listener {
   onChange: OnChangeEvent;
 }
 
+export type ListenerRef = MutableRefObject<Listener>;
+
 export interface Query {
   eventHandler: EventHandler;
-  listeners: Set<Listener>;
+  listenerRefs: Set<ListenerRef>;
 }

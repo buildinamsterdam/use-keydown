@@ -1,37 +1,47 @@
 import { useEffect, useRef } from "react";
 
-import { Config, EventHandler, Listener, OnChangeEvent, Query } from "./types";
+import {
+  Config,
+  EventHandler,
+  Listener,
+  ListenerRef,
+  OnChangeEvent,
+  Query,
+} from "./types";
 import { getEventTargetFromTarget } from "./utils";
 
 const queries = new Map<EventTarget, Query>();
 
 const addListener = (
   eventTarget: EventTarget,
-  listener: Listener,
+  listenerRef: ListenerRef,
   eventHandler: EventHandler
 ) => {
   const query = queries.get(eventTarget);
 
   // If query already exists, add this listener to existing set
-  if (query?.listeners) query.listeners.add(listener);
+  if (query?.listenerRefs) query.listenerRefs.add(listenerRef);
   // Else, target is new, so create new event listener
   else {
-    queries.set(eventTarget, { eventHandler, listeners: new Set([listener]) });
+    queries.set(eventTarget, {
+      eventHandler,
+      listenerRefs: new Set([listenerRef]),
+    });
     eventTarget.addEventListener("keydown", eventHandler);
   }
 };
 
-const removeListener = (eventTarget: EventTarget, listener: Listener) => {
+const removeListener = (eventTarget: EventTarget, listenerRef: ListenerRef) => {
   const query = queries.get(eventTarget);
   if (!query) return;
 
-  const { eventHandler, listeners } = query;
+  const { eventHandler, listenerRefs } = query;
 
-  // Remove this listener from existing set of listeners
-  listeners.delete(listener);
+  // Remove this listener from existing set of listenerRefs
+  listenerRefs.delete(listenerRef);
 
-  // If there are no more listeners, remove the event listener
-  if (listeners.size === 0) {
+  // If there are no more listenerRefs, remove the event listener
+  if (listenerRefs.size === 0) {
     queries.delete(eventTarget);
     eventTarget.removeEventListener("keydown", eventHandler);
   }
@@ -44,10 +54,10 @@ const handleEventTargetKeydown = (
   const query = queries.get(eventTarget);
   if (!query) return;
 
-  // Note: While looping listeners here isn't ideal, it's still more
+  // Note: While looping listenerRefs here isn't ideal, it's still more
   // performant than initializing a new event listener for each target
-  query.listeners.forEach((listener) => {
-    const { keyCode, onChange } = listener;
+  query.listenerRefs.forEach((listener) => {
+    const { keyCode, onChange } = listener.current;
 
     // If the event code matches the target key code, invoke the callback
     if (
@@ -91,14 +101,15 @@ const useKeydown = (
 ) => {
   const listenerRef = useRef<Listener>({ keyCode, onChange });
 
+  // Note: We store these values as refs so that we don't re-run the effect
+  // when they change. Also, as we're using a ref, whenever the eventHandler
+  // fires it will always have access to the latest values
   useEffect(() => {
     listenerRef.current = { keyCode, onChange };
   }, [keyCode, onChange]);
 
   useEffect(() => {
     const eventTarget = getEventTargetFromTarget(config?.target);
-
-    const listener = listenerRef.current;
 
     const eventHandler = (baseEvent: Event) => {
       // As user can pass in a custom 'target', we need to check if the event is
@@ -107,10 +118,10 @@ const useKeydown = (
       if (event.code) handleEventTargetKeydown(eventTarget, event);
     };
 
-    addListener(eventTarget, listener, eventHandler);
+    addListener(eventTarget, listenerRef, eventHandler);
 
     return () => {
-      removeListener(eventTarget, listener);
+      removeListener(eventTarget, listenerRef);
     };
   }, [config?.target]);
 };
