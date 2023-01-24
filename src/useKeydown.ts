@@ -102,7 +102,7 @@ const useKeydown = (
   const listenerRef = useRef<Listener>({ keyCode, onChange });
 
   // Note: We store these values as refs so that we don't re-run the effect
-  // when they change. Also, as we're using a ref, whenever the eventHandler
+  // when they change. Also, as we're using a ref, whenever 'eventHandler'
   // fires it will always have access to the latest values
   useEffect(() => {
     listenerRef.current = { keyCode, onChange };
