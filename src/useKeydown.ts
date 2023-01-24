@@ -56,8 +56,8 @@ const handleEventTargetKeydown = (
 
   // Note: While looping listenerRefs here isn't ideal, it's still more
   // performant than initializing a new event listener for each target
-  query.listenerRefs.forEach((listener) => {
-    const { keyCode, onChange } = listener.current;
+  query.listenerRefs.forEach((listenerRef) => {
+    const { keyCode, onChange } = listenerRef.current;
 
     // If the event code matches the target key code, invoke the callback
     if (
