@@ -58,7 +58,7 @@ By default, the hook will listen to the `window` object. You can however listen 
 import useKeydown from "@buildinams/use-keydown";
 
 const elementRef = useRef<HTMLDivElement>(null);
-useKeydown("Enter", () => {}, { target: elementRef }); // Do something on "Enter"...
+useKeydown("Enter", () => {}, { target: elementRef });
 ```
 
 ## Requirements
