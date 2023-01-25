@@ -2,7 +2,7 @@
 name: Report a Documentation Issue
 about: "Is something wrong, confusing or missing in the docs?"
 title: "[DOCUMENTATION] <title>"
-labels: Documentation
+labels: documentation
 ---
 
 > Clearly describe the documentation issue

@@ -2,7 +2,7 @@
 name: 🐞 Bug
 about: File a Bug / Issue
 title: "[BUG] <title>"
-labels: Bug
+labels: bug
 ---
 
 <!-- Note: Please search to see if an issue already exists for the bug you encountered before posting a new one. -->
