@@ -89,7 +89,7 @@ const handleEventTargetKeydown = (
  * });
  *
  * @example
- * useKeydown(["Escape", "Escape"], () => console.log("Escape + Escape Pressed!"));
+ * useKeydown(["ArrowLeft", "ArrowRight"], () => console.log("ArrowLeft or ArrowRight Pressed!"));
  *
  * @example
  * useKeydown("Escape", () => {}, { target: document });
