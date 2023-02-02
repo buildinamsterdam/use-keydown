@@ -111,10 +111,7 @@ const useKeydown = (
   useEffect(() => {
     const eventTarget = getEventTargetFromTarget(config?.target);
 
-    const eventHandler = (baseEvent: Event) => {
-      // As user can pass in a custom 'target', we need to check if the event is
-      // a 'KeyboardEvent' before we can safely access the 'event.code' property
-      const event = baseEvent as KeyboardEvent;
+    const eventHandler = (event: KeyboardEvent) => {
       if (event.code) handleEventTargetKeydown(eventTarget, event);
     };
 
