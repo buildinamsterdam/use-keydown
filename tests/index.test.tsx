@@ -7,16 +7,16 @@ interface MockComponentProps {
   keyCode: string | string[];
   onChange: OnChangeEvent;
   target?: Target;
-  listen?: boolean;
+  isEnabled?: boolean;
 }
 
 const MockComponent = ({
   keyCode,
   onChange,
   target,
-  listen,
+  isEnabled,
 }: MockComponentProps) => {
-  useKeydown(keyCode, onChange, { target, listen });
+  useKeydown(keyCode, onChange, { target, isEnabled });
   return <div />;
 };
 
@@ -204,7 +204,7 @@ describe("The hook", () => {
 
   it("doesn't add event listener if listen is set to 'false' on mount", () => {
     render(
-      <MockComponent keyCode="KeyG" onChange={jest.fn()} listen={false} />
+      <MockComponent keyCode="KeyG" onChange={jest.fn()} isEnabled={false} />
     );
 
     expect(window.addEventListener).not.toHaveBeenCalledWith(
@@ -224,7 +224,7 @@ describe("The hook", () => {
     );
 
     rerender(
-      <MockComponent keyCode="KeyG" onChange={jest.fn()} listen={false} />
+      <MockComponent keyCode="KeyG" onChange={jest.fn()} isEnabled={false} />
     );
 
     expect(window.removeEventListener).toHaveBeenCalledWith(

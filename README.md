@@ -63,14 +63,14 @@ useKeydown("Enter", () => {}, { target: elementRef });
 
 ## Conditionally Listening to Events
 
-You can conditionally listen to events by passing a `listen` prop the config object. This accepts a `boolean` value, and will only listen to events if the value is `true` (default). For example:
+You can conditionally listen to events by passing a `isEnabled` prop the config object. This accepts a `boolean` value, and will only listen to events if the value is `true` (default). For example:
 
 ```tsx
 import useKeydown from "@buildinams/use-keydown";
 
-const [listen, setListen] = useState(false);
+const [isEnabled, setIsEnabled] = useState(false);
 
-useKeydown("Enter", () => {}, { listen });
+useKeydown("Enter", () => {}, { isEnabled });
 ```
 
 ## Requirements

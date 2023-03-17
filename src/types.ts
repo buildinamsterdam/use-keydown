@@ -22,7 +22,7 @@ export interface Config {
    * This can be used to conditionally enable / disable the event listener.
    * Defaults to `true`.
    */
-  listen?: boolean;
+  isEnabled?: boolean;
 }
 
 export type EventHandler = (baseEvent: Event) => void;
