@@ -7,10 +7,16 @@ interface MockComponentProps {
   keyCode: string | string[];
   onChange: OnChangeEvent;
   target?: Target;
+  listen?: boolean;
 }
 
-const MockComponent = ({ keyCode, onChange, target }: MockComponentProps) => {
-  useKeydown(keyCode, onChange, { target });
+const MockComponent = ({
+  keyCode,
+  onChange,
+  target,
+  listen,
+}: MockComponentProps) => {
+  useKeydown(keyCode, onChange, { target, listen });
   return <div />;
 };
 
@@ -18,6 +24,10 @@ describe("The hook", () => {
   beforeEach(() => {
     jest.spyOn(window, "addEventListener");
     jest.spyOn(window, "removeEventListener");
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it("adds event listener on mount", () => {
@@ -189,6 +199,37 @@ describe("The hook", () => {
     );
     expect(onChange).not.toHaveBeenCalledWith(
       expect.objectContaining({ code: "KeyA" })
+    );
+  });
+
+  it("doesn't add event listener if listen is set to 'false' on mount", () => {
+    render(
+      <MockComponent keyCode="KeyG" onChange={jest.fn()} listen={false} />
+    );
+
+    expect(window.addEventListener).not.toHaveBeenCalledWith(
+      "keydown",
+      expect.any(Function)
+    );
+  });
+
+  it("removes event listener if listen set to 'false' after mount", () => {
+    const { rerender } = render(
+      <MockComponent keyCode="KeyG" onChange={jest.fn()} />
+    );
+
+    expect(window.addEventListener).toHaveBeenCalledWith(
+      "keydown",
+      expect.any(Function)
+    );
+
+    rerender(
+      <MockComponent keyCode="KeyG" onChange={jest.fn()} listen={false} />
+    );
+
+    expect(window.removeEventListener).toHaveBeenCalledWith(
+      "keydown",
+      expect.any(Function)
     );
   });
 });

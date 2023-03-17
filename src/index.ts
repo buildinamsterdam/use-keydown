@@ -79,6 +79,7 @@ const handleEventTargetKeydown = (
  *
  * @param config - Optional configuration object.
  * @param config.target - Lets you specify a dom node or ref you want to attach the event listener to. Defaults to `window`.
+ * @param config.listen - Lets you specify whether to listen for events or not. Defaults to `true`.
  *
  * @example
  * useKeydown("KeyA", (event) => console.log(event));
@@ -109,18 +110,20 @@ const useKeydown = (
   }, [keyCode, onChange]);
 
   useEffect(() => {
-    const eventTarget = getEventTargetFromTarget(config?.target);
+    if (config?.listen ?? true) {
+      const eventTarget = getEventTargetFromTarget(config?.target);
 
-    const eventHandler = (event: KeyboardEvent) => {
-      if (event.code) handleEventTargetKeydown(eventTarget, event);
-    };
+      const eventHandler = (event: KeyboardEvent) => {
+        if (event.code) handleEventTargetKeydown(eventTarget, event);
+      };
 
-    addListener(eventTarget, listenerRef, eventHandler);
+      addListener(eventTarget, listenerRef, eventHandler);
 
-    return () => {
-      removeListener(eventTarget, listenerRef);
-    };
-  }, [config?.target]);
+      return () => {
+        removeListener(eventTarget, listenerRef);
+      };
+    }
+  }, [config?.listen, config?.target]);
 };
 
 export default useKeydown;

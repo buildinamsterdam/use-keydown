@@ -17,6 +17,12 @@ export interface Config {
    * Defaults to `window`.
    */
   target?: Target;
+
+  /**
+   * This can be used to conditionally enable / disable the event listener.
+   * Defaults to `true`.
+   */
+  listen?: boolean;
 }
 
 export type EventHandler = (baseEvent: Event) => void;
