@@ -61,6 +61,18 @@ const elementRef = useRef<HTMLDivElement>(null);
 useKeydown("Enter", () => {}, { target: elementRef });
 ```
 
+## Conditionally Listening to Events
+
+You can conditionally listen to events by passing a `isEnabled` prop the config object. This accepts a `boolean` value, and will only listen to events if the value is `true` (default). For example:
+
+```tsx
+import useKeydown from "@buildinams/use-keydown";
+
+const [isEnabled, setIsEnabled] = useState(false);
+
+useKeydown("Enter", () => {}, { isEnabled });
+```
+
 ## Requirements
 
 This library requires a minimum React version of `17.0.0`.
